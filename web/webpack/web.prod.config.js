@@ -18,6 +18,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
+        // include: /node_modules\/react-native-/,
         loader: 'babel-loader',
         query: {
           presets: ['es2015', 'react'],

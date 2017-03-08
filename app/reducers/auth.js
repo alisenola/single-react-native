@@ -1,5 +1,3 @@
-import { Actions } from 'react-native-router-flux';
-
 const {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,

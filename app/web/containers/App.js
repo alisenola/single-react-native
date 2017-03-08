@@ -1,38 +1,45 @@
 import React, { Component, PropTypes } from 'react';
+
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as AuthAction from '../../actions/auth';
+import * as MainAction from '../../actions/main';
+
 // dumb components
 import Header     from '../components/Header';
 import HelloWorld from '../components/HelloWorld';
-// actions
-import {
-  toggleColor,
-} from '../../actions/actions';
+
+// map redux store to props
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+    main: state.main,
+  }
+}
+
+// map actions to props
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: {
+      Auth: bindActionCreators(AuthAction, dispatch),
+      Main: bindActionCreators(MainAction, dispatch),
+    }
+  }
+}
 
 /** The app entry point */
-class ReactNativeWebHelloWorld extends Component {
+class Main extends Component {
   render() {
-    // injected by connect call
-    const { dispatch, color, data } = this.props;
-
     return (
       <div className="react-native-web">
         <Header />
         <HelloWorld
-          onClick={() => dispatch(toggleColor())}
-          color={color}
+          onClick={() => this.props.actions.Main.toggleColor()}
+          color={this.props.main.color}
         />
       </div>
     );
   }
 }
 
-ReactNativeWebHelloWorld.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  color: PropTypes.string.isRequired,
-  data: PropTypes.object.isRequired,
-};
-
-const select = state => state;
-
-// Wrap the component to inject dispatch and state into it
-export default connect(select)(ReactNativeWebHelloWorld);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
