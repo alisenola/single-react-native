@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
-import Root           from './app/native/containers/Root';
+import { Provider } from 'react-redux';
+
+import App from './app/native/index';
 import configureStore from './app/store/configureStore.prod.js';
 
 const store = configureStore();
@@ -8,7 +10,9 @@ const store = configureStore();
 class webnative extends Component {
   render() {
     return (
-      <Root store={store} />
+      <Provider store={store}>
+        <App />
+      </Provider>
     );
   }
 }
